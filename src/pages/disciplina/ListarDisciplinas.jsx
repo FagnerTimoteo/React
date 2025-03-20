@@ -6,22 +6,31 @@ export default function ListarDisciplinas() {
     const [disciplinas, setDisciplinas] = useState([]);
 
     const handleDelete = async (id) => {
-        if(window.confirm("Deseja excluir?"))
-            fetch(`http://127.0.0.1:3000/api/Disciplinas/delete/${id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-            })
-            .then((response) => response.json())
-            .catch((err) => {
-                console.log(err.message);
-            });     
-        window.location.reload();
+        if(window.confirm("Deseja excluir?")) {
+            try {
+                const response = await fetch(`https://nodejs-production-b91d.up.railway.app/api/Disciplinas/delete/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                })
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    alert(`Erro ao excluir: ${errorData.msg}`);
+                    return;
+                }
+                
+                setDisciplinas(prevDisciplina => prevDisciplina.filter(disciplinas => disciplinas._id !== id))
+
+            } catch (err) {
+                console.log("Erro ao excluir:", err.message);
+            }       
+        }
     };
 
     useEffect(() => {
-        fetch('http://127.0.0.1:3000/api/Disciplinas/all')
+        fetch('https://nodejs-production-b91d.up.railway.app/api/Disciplinas/all')
             .then((response) => response.json())
             .then((data) => setDisciplinas(data) )
             .catch((err) => console.log(err.message) );

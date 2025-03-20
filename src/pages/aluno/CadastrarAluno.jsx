@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import "./Date.css";
 
@@ -11,10 +12,12 @@ export default function CasdastrarAluno() {
     const [email, setEmail] = useState('');
     const [curso, setCurso] = useState('');
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await fetch('http://127.0.0.1:3000/api/Aluno', {
+        await fetch('https://nodejs-production-b91d.up.railway.app/api/Aluno', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',

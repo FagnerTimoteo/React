@@ -6,7 +6,6 @@ Thumbs.db
 *.tmp
 *.bak
 
-# Node.js (vite-frontend e vite-backend)
 node_modules/
 dist/
 .env

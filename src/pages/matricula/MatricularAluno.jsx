@@ -14,7 +14,7 @@ export default function MatricularAluno() {
         e.preventDefault();
         
         try {
-            const response = await fetch('http://127.0.0.1:3000/api/Matricula', {
+            const response = await fetch('https://nodejs-production-b91d.up.railway.app/api/Matricula', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8',
@@ -35,14 +35,14 @@ export default function MatricularAluno() {
     };
 
     useEffect(() => {
-        fetch('http://127.0.0.1:3000/api/Disciplinas/all')
+        fetch('https://nodejs-production-b91d.up.railway.app/api/Disciplinas/all')
             .then((response) => response.json())
             .then((data) => setDisciplinas(data))
             .catch((err) => console.error("Erro ao buscar disciplinas:", err.message));
     }, []);
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:3000/api/Aluno/find/${id}`)
+        fetch(`https://nodejs-production-b91d.up.railway.app/api/Aluno/find/${id}`)
             .then((response) => response.json())
             .then((data) => setAluno(data))
             .catch((err) => console.error("Erro ao buscar aluno:", err.message));

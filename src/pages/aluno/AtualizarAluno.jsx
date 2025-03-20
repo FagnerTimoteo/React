@@ -19,7 +19,7 @@ export default function AtualizarAluno() {
     const handleSubmit = async (e) => {
         e.preventDefault();
     
-        await fetch(`http://127.0.0.1:3000/api/Aluno/update/${id}`, {
+        await fetch(`https://nodejs-production-b91d.up.railway.app/api/Aluno/update/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
@@ -55,7 +55,7 @@ export default function AtualizarAluno() {
     };
 
     useEffect(() => {
-            fetch(`http://127.0.0.1:3000/api/Aluno/find/${id}`)
+            fetch(`https://nodejs-production-b91d.up.railway.app/api/Aluno/find/${id}`)
                 .then((response) => response.json())
                 .then((data) => {
                     if (data) {

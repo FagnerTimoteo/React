@@ -10,31 +10,42 @@ export default function Login() {
         e.preventDefault();
     
         try {
-            const response = await fetch('http://127.0.0.1:3000/api/Usuario/login', {
+            const response = await fetch('https://nodejs-production-b91d.up.railway.app/api/Usuario/login', {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json; charset=UTF-8' },
                 body: JSON.stringify({ nome, senha }),
             });
     
+            const data = await response.json();
+    
+            if (response.status === 404) {
+                alert("Usuário não encontrado!");
+                return;
+            }
+    
+            if (response.status === 401) {
+                alert("Senha incorreta!");
+                return;
+            }
+    
             if (!response.ok) {
                 throw new Error("Erro ao realizar login!");
             }
     
-            const data = await response.json();
             alert(data.msg);
-            
+    
             if (data.token) {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("usuario", data.nome);
-                
                 window.location.href = "/";
             }
-            
+    
         } catch (error) {
             alert(error.message);
             console.log(error);
         }
     };
+    
 
     function showPassword(e) {
         const x = document.getElementById("password");

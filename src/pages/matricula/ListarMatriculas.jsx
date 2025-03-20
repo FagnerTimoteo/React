@@ -7,9 +7,9 @@ export default function ListarMatriculas() {
     const [disciplinas, setDisciplinas] = useState({});
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:3000/api/Matricula/all/${id}`)
+        fetch(`https://nodejs-production-b91d.up.railway.app/api/Matricula/all/${id}`)
             .then((response) => response.json())
-            .then((data) => {
+            .then((data) => {   
                 setMatriculas(data);
             })
             .catch((err) => console.error("Erro ao buscar matrículas:", err));
@@ -18,7 +18,7 @@ export default function ListarMatriculas() {
     useEffect(() => {
         const fetchDisciplinas = async () => {
             const promises = matriculas.map((matricula) =>
-                fetch(`http://127.0.0.1:3000/api/Disciplinas/${matricula._id}`)
+                fetch(`https://nodejs-production-b91d.up.railway.app/api/Disciplinas/${matricula._id}`)
                     .then((response) => response.json())
                     .then((data) => ({ id: matricula._id, ...data }))
                     .catch((err) => console.error("Erro ao buscar disciplina:", err))
@@ -39,20 +39,32 @@ export default function ListarMatriculas() {
     }, [matriculas]);
 
     const handleDelete = async (id) => {
-        console.log(id)
-        if(window.confirm("Deseja excluir?"))
-            fetch(`http://127.0.0.1:3000/api/Matricula/delete/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-            })
-            .then((response) => response.json())
-            .catch((err) => {
-                console.log(err.message);
-            });     
-        window.location.reload();
+        console.log(id);
+        
+        if (window.confirm("Deseja excluir esta matrícula?")) {
+            try {
+                const response = await fetch(`https://nodejs-production-b91d.up.railway.app/api/Matricula/delete/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                });
+    
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    alert(`Erro ao excluir matrícula: ${errorData.msg}`);
+                    return;
+                }
+    
+                setMatriculas(prevMatriculas => prevMatriculas.filter(matricula => matricula._id !== id));
+    
+                alert("Matrícula excluída com sucesso!");
+            } catch (err) {
+                console.log("Erro ao excluir:", err.message);
+            }
+        }
     };
+    
 
     return (
         <div className="container mt-4">

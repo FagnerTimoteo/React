@@ -9,7 +9,7 @@ export default function CasdastrarUsuario() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await fetch('http://127.0.0.1:3000/api/Usuario', {
+        await fetch('https://nodejs-production-b91d.up.railway.app/api/Usuario', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',

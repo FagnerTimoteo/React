@@ -7,7 +7,7 @@ export default function CadastrarDisciplina() {
     const handleSubmit = async (e) => {
         e.preventDefault();
     
-        await fetch('http://127.0.0.1:3000/api/Disciplinas', {
+        await fetch('https://nodejs-production-b91d.up.railway.app/api/Disciplinas', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
